@@ -1,7 +1,23 @@
-const Promise = require('bluebird');
-const mongoose = require('mongoose');
-const httpStatus = require('http-status');
-const APIError = require('../helpers/APIError');
+import Promise  from 'bluebird';
+import mongoose, { Document, Model }  from 'mongoose';
+import httpStatus  from 'http-status';
+import APIError  from '../helpers/APIError';
+
+export interface IUserDocument extends Document {
+  username: string,
+  mobileNumber: string,
+  createdAt: Date;
+}
+
+interface SkipLimit {
+  skip: number;
+  limit: number;
+}
+
+export interface IUserModel extends Model<IUserDocument> {
+  get(id: string): Promise<IUserDocument>;
+  list(args: SkipLimit): Promise<IUserDocument[]>
+}
 
 /**
  * User Schema
@@ -44,10 +60,10 @@ UserSchema.statics = {
    * @param {ObjectId} id - The objectId of user.
    * @returns {Promise<User, APIError>}
    */
-  get(id) {
+  get(id: string) {
     return this.findById(id)
       .exec()
-      .then((user) => {
+      .then((user: IUserDocument) => {
         if (user) {
           return user;
         }
@@ -74,4 +90,5 @@ UserSchema.statics = {
 /**
  * @typedef User
  */
-module.exports = mongoose.model('User', UserSchema);
+export const User: IUserModel = mongoose.model<IUserDocument, IUserModel>('User', UserSchema);
+export default User;

@@ -1,4 +1,4 @@
-const moongoose = require('mongoose');
+import moongoose from 'mongoose';
 const Schema = moongoose.Schema;
 
 const authorSchema = new Schema({
@@ -6,4 +6,4 @@ const authorSchema = new Schema({
     age: Number
 });
 
-module.exports = moongoose.model('Author', authorSchema);
+export default moongoose.model('Author', authorSchema);

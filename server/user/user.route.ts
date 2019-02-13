@@ -1,8 +1,8 @@
-const express = require('express');
-const validate = require('express-validation');
-const paramValidation = require('../../config/param-validation');
-const userCtrl = require('./user.controller');
+import express from 'express';
+import paramValidation from '../config/param-validation';
+import userCtrl from './user.controller';
 
+const validate = require('express-validation');
 const router = express.Router(); // eslint-disable-line new-cap
 
 router.route('/')
@@ -25,4 +25,4 @@ router.route('/:userId')
 /** Load user when API with userId route parameter is hit */
 router.param('userId', userCtrl.load);
 
-module.exports = router;
+export default router;

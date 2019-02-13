@@ -1,4 +1,4 @@
-const moongoose = require('mongoose');
+import moongoose from 'mongoose';
 const Schema = moongoose.Schema;
 
 const bookSchema = new Schema({
@@ -7,4 +7,4 @@ const bookSchema = new Schema({
     authorId: String
 });
 
-module.exports = moongoose.model('Book',bookSchema);
+export default moongoose.model('Book',bookSchema);

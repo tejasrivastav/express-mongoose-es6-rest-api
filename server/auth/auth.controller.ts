@@ -1,7 +1,9 @@
-const jwt = require('jsonwebtoken');
-const httpStatus = require('http-status');
-const APIError = require('../helpers/APIError');
-const config = require('../../config/config');
+import jwt from 'jsonwebtoken';
+import httpStatus from 'http-status';
+import APIError from '../helpers/APIError';
+import config from '../config/config';
+import { CustomRequest } from 'server/helpers/Request';
+import { NextFunction, Response } from 'express';
 
 // sample user, used for authentication
 const user = {
@@ -16,7 +18,7 @@ const user = {
  * @param next
  * @returns {*}
  */
-function login(req, res, next) {
+function login(req: CustomRequest, res: Response, next: NextFunction) {
   // Ideally you'll fetch this from the db
   // Idea here was to show how jwt works with simplicity
   if (req.body.username === user.username && req.body.password === user.password) {
@@ -39,7 +41,7 @@ function login(req, res, next) {
  * @param res
  * @returns {*}
  */
-function getRandomNumber(req, res) {
+function getRandomNumber(req: CustomRequest, res: Response) {
   // req.user is assigned by jwt middleware if valid token is provided
   return res.json({
     user: req.user,
@@ -47,4 +49,4 @@ function getRandomNumber(req, res) {
   });
 }
 
-module.exports = { login, getRandomNumber };
+export default { login, getRandomNumber };
